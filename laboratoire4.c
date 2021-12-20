@@ -47,7 +47,7 @@ int tester_string(char* c1, char* c2)
 	char a;   // création de deux variables contenant chacune le caractère à comparé
 	char b;   
 	printf("\nla première chaine est : %s", c1);
-	printf("\nla deuxième chaine est : %s", c2);
+	printf("\nla deuxième chaine est : %s\n", c2);
 	 
 
 	while (*(c1+index) != '\0' && *(c2+index) != '\0')
@@ -85,23 +85,23 @@ int boolean;
 boolean = tester_string(prenom1, prenom2);
 
 if (boolean == 1)
-printf("les prénoms matchent");
+printf("les prénoms matchent\n");
 else
-printf("les prénoms ne matchent pas");
+printf("les prénoms ne matchent pas\n");
 
 boolean = tester_string(prenom1, prenom3);
 
 if (boolean == 1)
-printf("les prénoms matchent");
+printf("les prénoms matchent\n");
 else
-printf("les prénoms ne matchent pas");
+printf("les prénoms ne matchent pas\n");
 
 boolean = tester_string(prenom1, prenom4);
 
 if (boolean == 1)
 printf("les prénoms matchent\n");
 else
-printf("les prénoms ne matchent pas\n");
+printf("les prénoms ne matchent pas\n\n");
 }
 
 /*
@@ -110,6 +110,63 @@ répertoire. Les informations nécessaires sont les personnes composant le répe
 de personnes contenues dans le répertoire.
 */
 
+typedef struct
+	{
+	short nombreDeContacts;
+	Personne* contacts;
+} Repertoire;
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void testExercice3()
+{
+Repertoire carnet;
+carnet.nombreDeContacts = 5;
+carnet.contacts = malloc(sizeof(Personne)*carnet.nombreDeContacts);
+int sop = sizeof(Personne);
+printf("la taille de Personne est de %d octets\n\n", sop);
+
+Personne* p = carnet.contacts;    // pour faciliter la lecture;
+
+
+for (int i = 0; i<carnet.nombreDeContacts; i++)
+	{
+	//char* prenom;        			// A l'aide M. Donnet
+	//scanf("%s", prenom); 			// A l'aide Géraldine 
+	(p+i*sop)->nom     = "Skywalker";	
+	(p+i*sop)->prenom  = "Luc";
+	(p+i*sop)->adresse = "Luke-Skywalker@laforce.be";
+	//free(prenom);
+	
+	}
+	
+	(p+0*sop)->nom     = "Skywalker";	
+	(p+0*sop)->prenom  = "Luc";
+	(p+0*sop)->adresse = "Luke-Skywalker@laforce.be";
+	
+	(p+1*sop)->nom     = "Skywalker";	
+	(p+1*sop)->prenom  = "Léa";
+	(p+1*sop)->adresse = "Lea@laforce.be";	
+	
+	(p+2*sop)->nom     = "Marcheur Des Cieux";	
+	(p+2*sop)->prenom  = "Lucien";
+	(p+2*sop)->adresse = "Lulu-de-la-street@laforce.be";	
+	
+	
+
+for (int i = 0; i<carnet.nombreDeContacts; i++)
+	{
+	printf("Le nom est: %s\n", (p+i*sop)->nom);
+	printf("Le prénom est: %s\n", (p+i*sop)->prenom);
+	printf("L'adresse est: %s\n\n", (p+i*sop)->adresse);
+	}
+	
+//retrouverAdresse(carnet, "Skywalker");
+
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /*
@@ -120,10 +177,31 @@ toire, la fonction affichera son email et retournera une valeur entière non nul
 renverra une valeur nulle
 */
 
+int retrouverAdresse(Repertoire r, char* n)
+{
+
+int sop = sizeof(Personne);
+for (int i = 0; i<r.nombreDeContacts; i++)
+{
+Personne *p = r.contacts;
+
+if(tester_string(n, (p+i*sop)->nom))
+{
+printf("\nL'adresse mail est %s" , p->adresse);
+return 1;
+}
+
+}
+
+return 0;
+}
+
 
 
 int main()
 {
+
 testExercice1();
 testExercice2();
+testExercice3();
 }
